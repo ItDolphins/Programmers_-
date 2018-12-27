@@ -1,0 +1,48 @@
+#include <stdio.h>
+//quick sort 구현
+
+
+void swap(int* arr, int a, int b)
+{
+	int tmp = arr[a];
+	arr[a] = arr[b];
+	arr[b] = tmp;
+}
+int partition(int* arr, int left, int right) //pivot을 기준으로 작은 값, 큰 값을 구분하고 pivot의 index를 return하는 함수
+{
+	int i, j;
+	int pivot = arr[left]; //pivot은 배열에서 가장 왼쪽에 있는것으로 설정
+	i = left; j = right;
+
+	while (i < j)
+	{
+		while (pivot < arr[j]) j--;
+		while (arr[i] <= pivot && i < j) i++;
+
+		swap(arr, i, j);
+	}
+	swap(arr, left, i);
+
+	return i;
+}
+void quick_sort(int* arr, int left, int right)
+{
+	if (left >= right) return;
+
+	int mid = partition(arr, left, right);
+
+	quick_sort(arr, left, mid - 1);
+	quick_sort(arr, mid + 1, right);
+
+}
+int main()
+{
+	int arr[] = { 80,70,60,50,40,30,20 };
+
+	quick_sort(arr, 0, sizeof(arr) / sizeof(int) - 1);
+
+	for (int i = 0; i < sizeof(arr) / sizeof(int); i++) printf("%d ", arr[i]);
+	printf("\n");
+
+	return 0;
+}
